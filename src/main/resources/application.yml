@@ -14,3 +14,15 @@ server:
 wechat:
   mpAppId: wxf46e4e2240563ed2
   mpAppSecret: 33f59d78904cd8cd9921bc6fd4b58eab
+  mchId: 12345
+  mchKey: 123
+  keyPath: 12321312
+  notifyUrl: 21312321
+
+  #wechat:
+  #  mp-appId: wxf46e4e2240563ed2
+  #  mp-appSecret: 33f59d78904cd8cd9921bc6fd4b58eab
+  #  mch-id: 12345
+  #  mch-key: 123
+  #  key-path: 12321312
+  #  notify-url: 21312321
