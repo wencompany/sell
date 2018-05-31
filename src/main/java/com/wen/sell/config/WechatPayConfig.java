@@ -15,12 +15,12 @@ public class WechatPayConfig {
     @Bean
     public BestPayServiceImpl bestPayService() {
         BestPayServiceImpl bestPayService = new BestPayServiceImpl();
-        bestPayService.setWxPayH5Config(wechatMpConfig());
+        bestPayService.setWxPayH5Config(wxPayH5Config());
         return bestPayService;
     }
 
     @Bean
-    public WxPayH5Config wechatMpConfig() {
+    public WxPayH5Config wxPayH5Config() {
 
         WxPayH5Config wxPayH5Config = new WxPayH5Config();
         wxPayH5Config.setAppId(config.getMpAppId());
