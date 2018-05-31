@@ -14,6 +14,7 @@ import com.wen.sell.pojo.OrderDetail;
 import com.wen.sell.pojo.OrderMaster;
 import com.wen.sell.pojo.ProductInfo;
 import com.wen.sell.service.OrderMasterService;
+import com.wen.sell.service.PayService;
 import com.wen.sell.service.ProductInfoService;
 import com.wen.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,9 @@ public class OrderMasterServiceImpl implements OrderMasterService {
 
     @Autowired
     private ProductInfoService productInfoService;
+
+    @Autowired
+    private PayService payService;
 
     @Override
     @Transactional
@@ -153,7 +157,7 @@ public class OrderMasterServiceImpl implements OrderMasterService {
 
         //如果已支付执行退款操作
         if (orderDTO.getOrderStatus().equals(PayStatusEnum.SUCCESS.getCode())) {
-            //TODO 退款操作
+            payService.refund(orderDTO);
         }
 
         return orderDTO;

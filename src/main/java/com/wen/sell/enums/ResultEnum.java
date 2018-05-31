@@ -17,6 +17,7 @@ public enum ResultEnum {
     CART_EMPTY(18, "购物车不能为空啊"),
     ORDER_USER_ERROR(19, "不是你的订单查它干嘛"),
     WECHAT_MP_ERROR(20, "微信公众号方面错误"),
+    WX_BACK_AMOUNT_ERROR(21, "微信返回金额不符"),
     ;
 
     private Integer code;
