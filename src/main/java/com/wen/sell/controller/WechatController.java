@@ -29,7 +29,7 @@ public class WechatController {
     @RequestMapping(value = "/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl) {
 
-        String url = "http://";
+        String url = "http://wmd.mynatapp.cc/sell/wechat/userInfo";
         String result = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_USER_INFO, URLEncoder.encode(returnUrl));
         log.info("网页授权  获取code  result={}", result);
 

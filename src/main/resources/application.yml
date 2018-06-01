@@ -12,12 +12,12 @@ server:
   context-path: /sell
   port: 8080
 wechat:
-  mpAppId: wxf46e4e2240563ed2
-  mpAppSecret: 33f59d78904cd8cd9921bc6fd4b58eab
+  mpAppId: wxf664b92c64d30d27
+  mpAppSecret: 41f7b835ff67b3c84b377a8f222de2b2
   mchId: 12345
   mchKey: 123
   keyPath: 12321312
-  notifyUrl: 21312321
+  notifyUrl: http://wmd.mynatapp.cc/sell/pay/notify
 
   #wechat:
   #  mp-appId: wxf46e4e2240563ed2

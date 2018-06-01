@@ -1,7 +1,11 @@
 package com.wen.sell.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.wen.sell.enums.OrderStatusEnum;
+import com.wen.sell.enums.PayStatusEnum;
 import com.wen.sell.pojo.OrderDetail;
+import com.wen.sell.utils.EnumUtil;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -31,4 +35,14 @@ public class OrderDTO {
     private String updatedTime;
 
     private List<OrderDetail> orderDetailList;
+
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum() {
+        return EnumUtil.getEnum(orderStatus, OrderStatusEnum.class);
+    }
+
+    @JsonIgnore
+    public PayStatusEnum getPayStatusEnum() {
+        return EnumUtil.getEnum(payStatus, PayStatusEnum.class);
+    }
 }
