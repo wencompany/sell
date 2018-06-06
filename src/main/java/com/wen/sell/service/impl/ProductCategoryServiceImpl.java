@@ -4,6 +4,8 @@ import com.wen.sell.dao.ProductCategoryRepository;
 import com.wen.sell.pojo.ProductCategory;
 import com.wen.sell.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,5 +33,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     public ProductCategory save(ProductCategory productCategory) {
         return productCategoryRepository.save(productCategory);
+    }
+
+    @Override
+    public Page<ProductCategory> findAll(Pageable pageable) {
+        return productCategoryRepository.findAll(pageable);
     }
 }

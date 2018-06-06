@@ -22,9 +22,23 @@ public interface ProductInfoService {
 
     ProductInfo save(ProductInfo productInfo);
 
-    //TODO +库存
+    // +库存
     void increaseStock(List<CartDTO> cartDTOS);
 
-    //TODO -库存
+    // -库存
     void decreaseStock(List<CartDTO> cartDTOS);
+
+    /**
+     * 上架商品
+     * @param productId
+     * @return
+     */
+    ProductInfo onSale(String productId);
+
+    /**
+     * 下架
+     * @param productId
+     * @return
+     */
+    ProductInfo offSale(String productId);
 }

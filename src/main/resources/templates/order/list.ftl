@@ -1,47 +1,52 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <link href="https://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-
+    <#include "../common/header.ftl">
     <body>
-        <div class="container">
-            <div class="row clearfix">
-                <div class="col-md-12 column">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>订单Id</th>
-                            <th>姓名</th>
-                            <th>手机号</th>
-                            <th>地址</th>
-                            <th>金额</th>
-                            <th>订单状态</th>
-                            <th>支付状态</th>
-                            <th>创建时间</th>
-                            <th colspan="2">操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <#list orderDTOPage.content as order>
+        <div id="wrapper" class="toggled">
+
+            <#include "../common/nav.ftl">
+            <div class="container-fluid">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <table class="table  table-condensed table-hover">
+                            <thead>
                             <tr>
-                                <td>${order.orderId}</td>
-                                <td>${order.buyerName}</td>
-                                <td>${order.buyerPhone}</td>
-                                <td>${order.buyerAddress}</td>
-                                <td>${order.orderAmount}</td>
-                                <td>${order.getOrderStatusEnum().msg}</td>
-                                <td>${order.getPayStatusEnum().msg}</td>
-                                <td>${order.createdTime}</td>
-                                <td>详情</td>
-                                <td>取消</td>
+                                <th>订单Id</th>
+                                <th>姓名</th>
+                                <th>手机号</th>
+                                <th>地址</th>
+                                <th>金额</th>
+                                <th>订单状态</th>
+                                <th>支付状态</th>
+                                <th>创建时间</th>
+                                <th colspan="2">操作</th>
                             </tr>
+                            </thead>
+                            <tbody>
+                        <#list orderDTOPage.content as order>
+                        <tr>
+                            <td>${order.orderId}</td>
+                            <td>${order.buyerName}</td>
+                            <td>${order.buyerPhone}</td>
+                            <td>${order.buyerAddress}</td>
+                            <td>${order.orderAmount}</td>
+                            <td>${order.getOrderStatusEnum().msg}</td>
+                            <td>${order.getPayStatusEnum().msg}</td>
+                            <td>${order.createdTime}</td>
+                            <td>
+                                <a href="/sell/seller/order/detail?orderId=${order.orderId}" >详情</a>
+                            </td>
+                            <td>
+                                    <#if order.getOrderStatusEnum().msg == '新下单' >
+                                        <a href="/sell/seller/order/cancel?orderId=${order.orderId}">取消</a>
+                                    </#if>
+                            </td>
+                        </tr>
                         </#list>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-12 column">
-                    <ul class="pagination">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12 column">
+                        <ul class="pagination">
                         <#if currentPage lte 1>
                             <li class="disabled"><a href="#">上一页</a></li>
                         <#else >
@@ -61,11 +66,11 @@
                         <#else >
                             <li><a href="/sell/seller/order/list?page=${currentPage + 1}&size=${size}">下一页</a></li>
                         </#if>
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-
     </body>
 </html>
 <#--<#list orderDTOPage.content as order>-->

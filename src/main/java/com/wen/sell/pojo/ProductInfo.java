@@ -1,5 +1,8 @@
 package com.wen.sell.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wen.sell.enums.ProductStatusEnum;
+import com.wen.sell.utils.EnumUtil;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -23,13 +26,18 @@ public class ProductInfo {
 
     private String productIcon;
 
-    private Integer productStatus;
+    private Integer productStatus = ProductStatusEnum.UP.getCode();
 
     private Integer categoryType;
 
     private String createdTime;
 
     private String updatedTime;
+
+    @JsonIgnore
+    public ProductStatusEnum getProductStatusEnum () {
+        return EnumUtil.getEnum(productStatus, ProductStatusEnum.class);
+    }
 
     public ProductInfo() {
     }
