@@ -4,6 +4,7 @@ import com.wen.sell.dto.OrderDTO;
 import com.wen.sell.enums.ResultEnum;
 import com.wen.sell.exception.SellException;
 import com.wen.sell.service.OrderMasterService;
+import com.wen.sell.service.PushMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,9 @@ public class SellOrderController {
 
     @Autowired
     private OrderMasterService orderMasterService;
+
+    @Autowired
+    private PushMessage pushMessage;
 
     @GetMapping(value = "/list")
     public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -93,9 +97,10 @@ public class SellOrderController {
     public ModelAndView finishi(@RequestParam("orderId") String orderId,
                                 Map<String, Object> map) {
 
+        OrderDTO orderDTOTemp = new OrderDTO();
         try {
             OrderDTO orderDTO = orderMasterService.findOne(orderId);
-            orderMasterService.finish(orderDTO);
+            orderDTOTemp = orderMasterService.finish(orderDTO);
         } catch (Exception e) {
             log.error("【卖家完结订单】 发生异常 {}", e);
 
@@ -107,6 +112,8 @@ public class SellOrderController {
 
         map.put("msg", ResultEnum.ORDER_FINISHI_SUCCESS.getMsg());
         map.put("url", RETURN_URL);
+
+        pushMessage.orderStatus(orderDTOTemp);
 
         return new ModelAndView("common/error", map);
 

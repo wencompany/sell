@@ -31,7 +31,7 @@
                             <td>${order.orderAmount}</td>
                             <td>${order.getOrderStatusEnum().msg}</td>
                             <td>${order.getPayStatusEnum().msg}</td>
-                            <td>${order.createdTime}</td>
+                            <td>${(order.createdTime)!""}</td>
                             <td>
                                 <a href="/sell/seller/order/detail?orderId=${order.orderId}" >详情</a>
                             </td>
@@ -68,9 +68,73 @@
                         </#if>
                         </ul>
                     </div>
+
+                    <#--弹窗提示-->
+                    <div class="col-md-12 column">
+                        <div class="modal fade" id="showMsg" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                            新订单
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        你有新的订单了
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" onclick="javascript:document.getElementById('notice').pause();" class="btn btn-default">关闭</button>
+                                        <button type="button" onclick="location.reload()" class="btn btn-primary">保存</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
                 </div>
             </div>
         </div>
+        <#--播放音乐-->
+        <audio id="notice" loop="loop">
+            <source src="/sell/mp3/song.mp3" type="audio/mpeg"></source>
+        </audio>
+
+         <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script>
+            var websocket = null;
+            if ('WebSocket' in window) {
+                websocket = new WebSocket('ws://wmd.mynatapp.cc/sell/webSocket');
+            } else {
+                alert("该浏览器不支持WebSocket")
+            }
+
+            websocket.onopen = function (event) {
+                console.log("建立连接")
+            }
+
+            websocket.onclose = function (event) {
+                console.log("关闭连接")
+            }
+
+            websocket.onmessage = function (evnt) {
+                console.log('收到消息', evnt.data);
+                //播放音乐，弹窗提示
+                // $('#showMsg').showModal();
+                // document.getElementById('notice').onplay;
+                $('#showMsg').modal('show');
+
+                document.getElementById('notice').play();
+            }
+
+            websocket.onerror = function (event) {
+                alert("web通信发生错误");
+            }
+
+            websocket.onbeforeunload = function () {
+                websocket.close();
+            }
+        </script>
     </body>
 </html>
 <#--<#list orderDTOPage.content as order>-->

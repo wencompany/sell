@@ -8,17 +8,30 @@ spring:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
+  redis:
+    host: 127.0.0.1
+    port: 6379
 server:
   context-path: /sell
   port: 8080
 wechat:
   mpAppId: wxf664b92c64d30d27
   mpAppSecret: 41f7b835ff67b3c84b377a8f222de2b2
+  openAppId: 123
+  openAppSecret: 123
   mchId: 12345
   mchKey: 123
   keyPath: 12321312
   notifyUrl: http://wmd.mynatapp.cc/sell/pay/notify
-
+  templateId:
+    orderStatus: UffmD6VPCF57tfl8HHJswoa0zDnkhARP2Kv2WRK2c1U
+projectUrl:
+#  wechatMpAuthorize: http://localhost:8080
+#  wechatOpenAuthorize: http://localhost:8080
+#  sell: http://localhost:8080
+  wechatMpAuthorize: http://wmd.mynatapp.cc/
+  wechatOpenAuthorize: http://wmd.mynatapp.cc/
+  sell: http://wmd.mynatapp.cc/
   #wechat:
   #  mp-appId: wxf46e4e2240563ed2
   #  mp-appSecret: 33f59d78904cd8cd9921bc6fd4b58eab

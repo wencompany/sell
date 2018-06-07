@@ -16,6 +16,7 @@ import com.wen.sell.pojo.ProductInfo;
 import com.wen.sell.service.OrderMasterService;
 import com.wen.sell.service.PayService;
 import com.wen.sell.service.ProductInfoService;
+import com.wen.sell.utils.DateFormater;
 import com.wen.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -84,6 +85,8 @@ public class OrderMasterServiceImpl implements OrderMasterService {
         orderMaster.setOrderAmount(orderAmount);
         orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
         orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
+        orderMaster.setCreatedTime(DateFormater.nowTimeStr());
+        orderMaster.setUpdatedTime(DateFormater.nowTimeStr());
         orderMasterRepository.save(orderMaster);
 
         //减库存

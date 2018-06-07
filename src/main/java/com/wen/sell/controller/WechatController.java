@@ -1,5 +1,6 @@
 package com.wen.sell.controller;
 
+import com.wen.sell.config.ProjectUrlConfig;
 import com.wen.sell.config.WechatMpConfig;
 import com.wen.sell.enums.ResultEnum;
 import com.wen.sell.exception.SellException;
@@ -26,10 +27,16 @@ public class WechatController {
     @Autowired
     private WxMpService wxMpService;
 
+    @Autowired
+    private WxMpService wxOpenService;
+
+    @Autowired
+    private ProjectUrlConfig projectUrlConfig;
+
     @RequestMapping(value = "/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl) {
 
-        String url = "http://wmd.mynatapp.cc/sell/wechat/userInfo";
+        String url = projectUrlConfig.getWechatMpAuthorize() + "/sell/wechat/userInfo";
         String result = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_USER_INFO, URLEncoder.encode(returnUrl));
         log.info("网页授权  获取code  result={}", result);
 
@@ -39,6 +46,32 @@ public class WechatController {
     @GetMapping(value = "/userInfo")
     public String userInfo(@RequestParam("code") String code,
                          @RequestParam("state") String returnUrl) {
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
+
+        try {
+            wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
+        } catch (WxErrorException e) {
+            log.error("网页授权  {}", e);
+            throw new SellException(ResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
+        }
+
+        String openId = wxMpOAuth2AccessToken.getOpenId();
+
+        return "redirect:" + returnUrl + "?openid=" + openId;
+    }
+
+    @RequestMapping(value = "/qrAuthorize")
+    public String qrAuthorize(@RequestParam("returnUrl") String returnUrl) {
+        String url = projectUrlConfig.getWechatOpenAuthorize() + "/sell/wechat/qrUserInfo";
+        String result = wxOpenService.buildQrConnectUrl(url, WxConsts.QRCONNECT_SCOPE_SNSAPI_LOGIN, URLEncoder.encode(returnUrl));
+        log.info("网页授权  获取code  result={}", result);
+
+        return "redirect:" + result;
+    }
+
+    @GetMapping(value = "/qrUserinfo")
+    public String qrUserinfo(@RequestParam("code") String code,
+                             @RequestParam("state") String returnUrl) {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
 
         try {

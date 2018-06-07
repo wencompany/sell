@@ -7,6 +7,7 @@ import com.wen.sell.exception.SellException;
 import com.wen.sell.form.OrderForm;
 import com.wen.sell.service.BuyerService;
 import com.wen.sell.service.OrderMasterService;
+import com.wen.sell.service.WebSocket;
 import com.wen.sell.utils.ResultVoUtil;
 import com.wen.sell.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,9 @@ public class BuyerOrderController {
     @Autowired
     private BuyerService buyerService;
 
+    @Autowired
+    private WebSocket webSocket;
+
     //创建订单
     @PostMapping(value = "/create")
     public ResultVo<Map<String, String>> create(@Valid OrderForm orderForm, BindingResult bindingResult) {
@@ -52,6 +56,8 @@ public class BuyerOrderController {
         }
 
         OrderDTO orderDTOTemp = orderMasterService.createOrder(orderDTO);
+
+        webSocket.sendMessage(orderDTO.getOrderId());
 
         Map<String,String> map = new HashMap<>();
         map.put("orderId",orderDTOTemp.getOrderId());
