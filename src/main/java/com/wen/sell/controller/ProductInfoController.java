@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/product")
+@RequestMapping(value = "/buyer/product")
 public class ProductInfoController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class ProductInfoController {
     @Autowired
     private ProductCategoryService productCategoryService;
 
-    @RequestMapping(value = "/getlists", method = RequestMethod.GET)
+    @RequestMapping(value = "/lists", method = RequestMethod.GET)
     public ResultVo getList(){
 
         List<ProductInfo> productInfos = productInfoService.findUpAll();
