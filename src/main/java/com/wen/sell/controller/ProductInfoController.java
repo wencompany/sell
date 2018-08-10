@@ -27,7 +27,7 @@ public class ProductInfoController {
     @Autowired
     private ProductCategoryService productCategoryService;
 
-    @RequestMapping(value = "/lists", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResultVo getList(){
 
         List<ProductInfo> productInfos = productInfoService.findUpAll();
